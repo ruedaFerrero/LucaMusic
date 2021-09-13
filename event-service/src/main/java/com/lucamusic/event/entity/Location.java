@@ -5,7 +5,10 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import lombok.Data;
+
 @Entity
+@Data
 public class Location implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -34,44 +37,7 @@ public class Location implements Serializable {
 	}
 
 
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getPlace() {
-		return place;
-	}
-	public void setPlace(String place) {
-		this.place = place;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public Integer getCapacity() {
-		return capacity;
-	}
-	public void setCapacity(Integer capacity) {
-		this.capacity = capacity;
-	}
-
-
-	@Override
-	public String toString() {
-		return "Location [id=" + id + ", name=" + name + ", place=" + place + ", address=" + address + ", capacity="
-				+ capacity + "]";
-	}
-
+	
 
 
 
