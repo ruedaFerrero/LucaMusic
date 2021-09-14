@@ -1,8 +1,17 @@
 package com.lucamusic.event.repository;
 
-import com.lucamusic.event.entity.Event;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import java.util.List;
+import java.util.Optional;
 
-public interface EventRepository extends MongoRepository<Event, Long> {
-    public Event findByName(String name);
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+
+import com.lucamusic.event.entity.Event;
+
+@Repository
+public interface EventRepository extends MongoRepository<Event, Long>{
+	
+	public Optional<Event> findById(Long id);
+	public List<Event> findAll();
+
 }

@@ -1,20 +1,27 @@
 package com.lucamusic.event.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.io.Serializable;
+@Entity
+@Data
+public class Event {
 
-@Document(collection = "events")
-@Data @AllArgsConstructor @NoArgsConstructor @Builder
-public class Event implements Serializable {
-    @Id
-    private Long id;
-    private String name;
-    private Double money;
-    private Location location;
+	@Id
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	private Long id;
+	private String name;
+	
+	public Event() {
+	}
+	
+	public Event(Long id, String name) {
+		super();
+		this.id=id;
+		this.name=name;
+	}
 }
