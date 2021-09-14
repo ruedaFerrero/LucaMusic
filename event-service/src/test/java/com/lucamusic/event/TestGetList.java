@@ -56,7 +56,7 @@ public class TestGetList {
 		when(eventService.getEvents()).thenReturn(events);
 		
 		mockMvc
-			.perform(get("/events/list"))
+			.perform(get("/events"))
 			.andDo(print())
 			.andExpect(status().isOk());
 	}

@@ -50,7 +50,7 @@ public class TestModifyEvent {
 		when(eventService.modifyEvent(event)).thenReturn(event);
 		
 		mockMvc
-			.perform(put("/events")
+			.perform(put("/events/{id}")
 					.contentType(MediaType.APPLICATION_JSON)
 					.content(asJsonString(event)))
 			.andExpect(status().isOk());
