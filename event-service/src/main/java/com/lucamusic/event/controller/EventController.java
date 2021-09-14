@@ -40,7 +40,8 @@ public class EventController {
 	/**
 	 * Metodo para recuperar un listado completo de los eventos
 	 * @return List<Event>
-	 * @author Jose Antonio*/
+	 * @author Jose Antonio
+	 */
 	@GetMapping
 	public ResponseEntity<List<Event>> getEvents(){
 		List<Event> events = serv.getEvents();

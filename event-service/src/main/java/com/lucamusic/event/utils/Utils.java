@@ -10,7 +10,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Utils
+ * Clase de utilidades
+ * @version 1.0 Septiembre 2021
+ * @author Julio
+ */
 public class Utils {
+    /**
+     * Convierte un objeto a string
+     * @param o Objeto a parsear
+     * @return Objeto parseado
+     */
     public static String objectToJsonStringParser(Object o){
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonString = "";
@@ -23,6 +34,11 @@ public class Utils {
         return jsonString;
     }
 
+    /**
+     * Formatea los errores de un objeto tipo BindingResult a String
+     * @param result Resultados de la validación de parámetros
+     * @return Cadena de texto con los errores tipo BindingResult
+     */
     public static String formatBindingResult(BindingResult result){
         List<Map<String, String>> errors = result.getFieldErrors().stream()
                 .map(err -> {
