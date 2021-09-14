@@ -11,8 +11,7 @@ import java.util.Map;
 @Data
 @Document(value = "events") @Builder
 public class Event {
-	@MongoId
-	private Long id;
+	private String id;
 	private String name;
 	private String shortDescription;
 	private String longDescription;
@@ -22,4 +21,5 @@ public class Event {
 	Map<String, Double> prices;
 	private String musicStyle;
 	private Integer ticketsSold = 0;
+	private String status;
 }
