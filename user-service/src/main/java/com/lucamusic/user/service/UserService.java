@@ -2,6 +2,8 @@ package com.lucamusic.user.service;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
 import com.lucamusic.user.entity.User;
 
 public interface UserService {
@@ -10,7 +12,7 @@ public interface UserService {
 	
 	public List<User> getAllUsers();
 	
-	public void findByID(Long id);
+	public User findByID(Long id);
 	
 	public void DeleteUser(Long id);
 }
