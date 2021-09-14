@@ -12,7 +12,7 @@ import java.util.Map;
 @Document(value = "events") @Builder
 public class Event {
 	@MongoId
-	private Long id;
+	private String id;
 	private String name;
 	private String shortDescription;
 	private String longDescription;
