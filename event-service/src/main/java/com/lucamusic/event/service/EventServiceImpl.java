@@ -53,8 +53,10 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public Event modifyEvent(Event event) {
-		Optional<Event> eventDB = eventRepository.findById(event.getId());
-		
-		return null;
+		Optional<Event> eventDB = eventRepository.findById(event.getId());	
+		return eventDB.orElseGet(() -> {
+			log.info("Modifying event...");
+			return eventRepository.save(event);
+		});
 	}
 }
