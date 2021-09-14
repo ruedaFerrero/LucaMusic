@@ -2,7 +2,6 @@ package com.lucamusic.event.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lucamusic.event.entity.Event;
 import com.lucamusic.event.service.EventService;
 
+/**
+ * EventController
+ * Clase Controller del microservicio, redirecciona según las peticiones realizadas por el cliente.
+ * @version 1.0 Septiembre 2021
+ * @author Jose Antonio, Edgar*/
+
 @RestController
 @RequestMapping("/events")
 public class EventController {
@@ -27,12 +32,22 @@ public class EventController {
 	@Autowired
 	private EventService serv;
 	
+	/**
+	 * Metodo para crear un nuevo evento
+	 * @param event Event
+	 * @return respuesta 201, CREATED
+	 * @author Jose Antonio*/
 	@PostMapping
 	public ResponseEntity<Event> createEvent(@RequestBody Event event){
 		Event eventCreate = serv.createEvent(event);
 		return ResponseEntity.status(HttpStatus.CREATED).body(eventCreate);
 	}
-	@GetMapping("/list")
+	
+	/**
+	 * Metodo para recuperar un listado completo de los eventos
+	 * @return List<Event>
+	 * @author Jose Antonio*/
+	@GetMapping
 	public ResponseEntity<List<Event>> getEvents(){
 		List<Event> events = new ArrayList<>();
 		events = serv.getEvents();
@@ -42,18 +57,33 @@ public class EventController {
 		return ResponseEntity.ok(events);
 	}
 	
+	/**
+	 * Metodo para recuperar un evento por id
+	 * @param ObjectId id
+	 * @return Event
+	 * @author Jose Antonio*/
 	@GetMapping("/{id}")
 	public Event getEventById(@PathVariable ObjectId id){
 	return serv.getEventById(id);
 	}
 	
-	@DeleteMapping
+	/**
+	 * Metodo para eliminar un evento
+	 * @param event Event
+	 * @return ResponseEntity 200, OK
+	 * @author Edgar*/
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Event> deleteEvent(@RequestBody Event event){
 		Event eventDeleted = serv.deleteEvent(event);
 		return ResponseEntity.status(HttpStatus.OK).body(eventDeleted);
 	}
 	
-	@PutMapping
+	/**
+	 * Metodo para modificar un evento
+	 * @param event Event
+	 * @return ResponseEntity 200, OK
+	 * @author Edgar*/
+	@PutMapping("/{id}")
 	public ResponseEntity<Event> modifyEvent(@RequestBody Event event){
 		Event eventUpdated = serv.modifyEvent(event);
 		return ResponseEntity.status(HttpStatus.OK).body(eventUpdated);
