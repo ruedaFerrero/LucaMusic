@@ -1,8 +1,15 @@
 package com.lucamusic.event.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +30,20 @@ public class EventController {
 	public ResponseEntity<Event> createEvent(@RequestBody Event event){
 		Event eventCreate = serv.createEvent(event);
 		return ResponseEntity.status(HttpStatus.CREATED).body(eventCreate);
+	}
+	@GetMapping("/list")
+	public ResponseEntity<List<Event>> getEvents(){
+		List<Event> events = new ArrayList<>();
+		events = serv.getEvents();
+		if(events.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok(events);
+	}
+	
+	@GetMapping("/{id}")
+	public Event getEventById(@PathVariable ObjectId id){
+	return serv.getEventById(id);
 	}
 	
 	@PutMapping

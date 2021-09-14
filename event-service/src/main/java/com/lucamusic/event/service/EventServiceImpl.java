@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.lucamusic.event.entity.Event;
 import com.lucamusic.event.repository.EventRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -29,6 +30,15 @@ public class EventServiceImpl implements EventService {
 			event.setStatus("CREATED");
 			return eventRepository.save(event);
 		});
+	}
+	@Override
+	public List<Event> getEvents(){
+		return eventRepository.findAll();
+	}
+	
+	@Override
+	public Event getEventById(ObjectId id) {
+		return eventRepository.findById(id).orElse(null);
 	}
 
 	@Override
