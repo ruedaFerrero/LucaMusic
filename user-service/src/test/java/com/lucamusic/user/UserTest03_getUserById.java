@@ -37,20 +37,21 @@ public class UserTest03_getUserById {
 
 	@Test
 	void assertUserSearchById() throws Exception {
-		Long id = null;
 		
-		User user = new User(id, "Pepe", "pepe@", "qqq", new Date(2020));
-		user.setId(1L);
+
+		User user = new User(1L, "Pepe", "pepe@", "qqq", new Date(2020));
 		
+
+		Long id = 1L;
 		when(serv.findByID(id)).thenReturn(user);
 
 		mockMvc
-		.perform(get("/user").param("id", "1L"))
+		.perform(get("/user/1"))
 		.andDo(print())
 		.andExpect(status().isOk());
-		
-		
-		
+
+
+
 	}
 }
 
