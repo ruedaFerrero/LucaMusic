@@ -24,7 +24,7 @@ import com.lucamusic.user.service.UserServiceImpl;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(UserControl.class)
-public class UserTest02_createUser {
+public class UserTest03_getUserById {
 
 
 
@@ -36,13 +36,16 @@ public class UserTest02_createUser {
 	private UserServiceImpl serv;
 
 	@Test
-	void assertUserIsCreated() throws Exception {
-		User user = new User(1L, "Pepe", "pepe@", "qqq", new Date(2020));
+	void assertUserSearchById() throws Exception {
+		Long id = null;
 		
-		when(serv.createUser(user)).thenReturn(user);
+		User user = new User(id, "Pepe", "pepe@", "qqq", new Date(2020));
+		user.setId(1L);
+		
+		when(serv.findByID(id)).thenReturn(user);
 
 		mockMvc
-		.perform(post("/user/add"))
+		.perform(get("/user").param("id", "1L"))
 		.andDo(print())
 		.andExpect(status().isOk());
 		
