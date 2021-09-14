@@ -25,4 +25,21 @@ public class EventServiceImpl implements EventService {
 			return eventRepository.save(event);
 		});
 	}
+
+	@Override
+	public Event deleteEvent(Event event) {
+		Optional<Event> eventDB = eventRepository.findById(event.getId());
+		return eventDB.orElseGet(() -> {
+			log.info("Deleting event...");
+			event.setStatus("DELETED");
+			return eventRepository.save(event);
+		});
+	}
+
+	@Override
+	public Event modifyEvent(Event event) {
+		Optional<Event> eventDB = eventRepository.findById(event.getId());
+		
+		return null;
+	}
 }

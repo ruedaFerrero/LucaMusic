@@ -6,4 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface EventService {
 	public Event createEvent(Event event);
+	public Event deleteEvent(Event event);
+	public Event modifyEvent(Event event);
 }
