@@ -15,7 +15,6 @@ import java.util.Map;
 @Document(value = "events") @Builder @AllArgsConstructor @NoArgsConstructor
 public class Event {
 	@MongoId
-
 	private ObjectId id;
 	private String name;
 	private String shortDescription;
