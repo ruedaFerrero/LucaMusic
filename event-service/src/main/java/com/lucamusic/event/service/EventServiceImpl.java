@@ -1,18 +1,16 @@
 package com.lucamusic.event.service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
+import lombok.extern.slf4j.Slf4j;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lucamusic.event.entity.Event;
-import com.lucamusic.event.entity.Location;
 import com.lucamusic.event.repository.EventRepository;
 
-import lombok.RequiredArgsConstructor;
+import java.util.Optional;
 
+@Slf4j
 @Service
 public class EventServiceImpl implements EventService {
 
@@ -21,8 +19,15 @@ public class EventServiceImpl implements EventService {
 	
 	@Override
 	public Event createEvent(Event event) {
-	
-		return eventRepository.save(event);
+		if(event.getId() == null){
+			event.setId(new ObjectId());
+		}
+
+		Optional<Event> eventDB = eventRepository.findById(event.getId());
+		return eventDB.orElseGet(() -> {
+			log.info("Creating event...");
+			event.setStatus("CREATED");
+			return eventRepository.save(event);
+		});
 	}
-	
 }

@@ -12,14 +12,12 @@ import lombok.Data;
 @Data
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	@Id
 	Long id;
 	String fullName;
 	String email;
 	String password;
 	Date registerDate;
-
 
 	public User() {
 		super();
@@ -35,18 +33,4 @@ public class User implements Serializable {
 		this.password = password;
 		this.registerDate = registerDate;
 	}
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
 }
