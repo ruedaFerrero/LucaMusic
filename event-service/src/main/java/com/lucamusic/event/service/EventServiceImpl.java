@@ -20,24 +20,24 @@ public class EventServiceImpl implements EventService {
 	
 	@Override
 	public Event createEvent(Event event) {
-		if(event.getId() == null){
-			event.setId(new ObjectId());
+		Event eventDB = eventRepository.findByName(event.getName());
+		if(eventDB != null){
+			System.out.println(event.getId());
+			return eventDB;
 		}
 
-		Optional<Event> eventDB = eventRepository.findById(event.getId());
-		return eventDB.orElseGet(() -> {
-			log.info("Creating event...");
-			event.setStatus("CREATED");
-			return eventRepository.save(event);
-		});
+		log.info("Creating event...");
+		event.setStatus("CREATED");
+		return eventRepository.save(event);
 	}
+
 	@Override
 	public List<Event> getEvents(){
 		return eventRepository.findAll();
 	}
 	
 	@Override
-	public Event getEventById(ObjectId id) {
+	public Event getEventById(String id) {
 		return eventRepository.findById(id).orElse(null);
 	}
 

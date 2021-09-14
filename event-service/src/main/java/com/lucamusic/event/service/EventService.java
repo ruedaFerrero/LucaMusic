@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public interface EventService {
 	public Event createEvent(Event event);
 	public List<Event> getEvents();
-	public Event getEventById(ObjectId id);
+	public Event getEventById(String id);
 	public Event deleteEvent(Event event);
 	public Event modifyEvent(Event event);
 }

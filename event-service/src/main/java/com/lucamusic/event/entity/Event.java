@@ -5,17 +5,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Map;
 
 @Data
 @Document(value = "events") @Builder @AllArgsConstructor @NoArgsConstructor
 public class Event {
-	@MongoId
-	private ObjectId id;
+	@Id
+	private String id;
+	@NotNull(message = "El campo nombre debe existir")
 	private String name;
 	private String shortDescription;
 	private String longDescription;
