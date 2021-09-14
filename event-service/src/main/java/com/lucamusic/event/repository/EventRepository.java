@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.lucamusic.event.entity.Event;
 
 @Repository
-public interface EventRepository extends MongoRepository<Event, Long>{
+public interface EventRepository extends MongoRepository<Event, String>{
 	public List<Event> findAll();
 }

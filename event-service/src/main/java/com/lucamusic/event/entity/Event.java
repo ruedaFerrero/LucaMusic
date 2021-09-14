@@ -22,4 +22,5 @@ public class Event {
 	Map<String, Double> prices;
 	private String musicStyle;
 	private Integer ticketsSold = 0;
+	private String status;
 }
