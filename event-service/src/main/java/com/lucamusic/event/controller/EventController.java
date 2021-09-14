@@ -18,9 +18,6 @@ public class EventController {
 	@Autowired
 	private EventService serv;
 	
-	@Autowired
-	private RestTemplate restTemplate;
-	
 	@PostMapping("/add")
 	public ResponseEntity<Event> createEvent(Event event){
 		Event eventCreate = serv.createEvent(event);
