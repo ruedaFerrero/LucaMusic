@@ -1,6 +1,7 @@
 package com.lucamusic.event.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,10 @@ public class EventServiceImpl implements EventService {
 	
 	@Override
 	public Event createEvent(Event event) {
+		if(event.getId() == null){
+			event.setId(new ObjectId());
+		}
+
 		Optional<Event> eventDB = eventRepository.findById(event.getId());
 		return eventDB.orElseGet(() -> {
 			log.info("Creating event...");
