@@ -2,16 +2,12 @@ package com.lucamusic.event.entity;
 
 import java.io.Serializable;
 
-
-
 import lombok.Data;
 
 
 @Data
 public class Location implements Serializable {
-	private static final long serialVersionUID = 1L;
 
-	
 	Long id;
 	String name;
 	String place;

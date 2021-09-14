@@ -1,22 +1,14 @@
 package com.lucamusic.event.entity;
 
-
-
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-
+@Data
+@Document
 public class Event {
 
-	
+	@Id
 	private Long id;
 	private String name;
-	
-	public Event() {
-	}
-	
-	public Event(Long id, String name) {
-		super();
-		this.id=id;
-		this.name=name;
-	}
 }
