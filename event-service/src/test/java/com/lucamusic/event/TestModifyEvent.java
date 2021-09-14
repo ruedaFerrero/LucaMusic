@@ -1,12 +1,8 @@
 package com.lucamusic.event;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,9 +11,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lucamusic.event.controller.EventController;
 import com.lucamusic.event.entity.Event;
 import com.lucamusic.event.repository.EventRepository;
@@ -26,13 +24,13 @@ import com.lucamusic.event.service.EventServiceImpl;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(EventController.class)
-public class TestGetList {
-	
+public class TestModifyEvent {
+
 	@Autowired
 	private MockMvc mockMvc;
 	
 	@TestConfiguration
-	static class TestGetListConfiguration {
+	static class TestModifyEventConfiguration {
 		@Bean
 		public EventService eventService() {
 			return new EventServiceImpl();
@@ -45,20 +43,24 @@ public class TestGetList {
 	@MockBean
 	private EventRepository eventRepository;
 	
-	
 	@Test
-	void assertThatListIsCalled() throws Exception{
-		Event event = new Event();
-		List<Event> events = new ArrayList<Event>();
+	void assertThatEventIsModified() throws Exception{
+		Event event = Event.builder().build();
 		
-		events.add(event);
-		
-		when(eventService.getEvents()).thenReturn(events);
+		when(eventService.modifyEvent(event)).thenReturn(event);
 		
 		mockMvc
-			.perform(get("/events/list"))
-			.andDo(print())
+			.perform(put("/events")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content(asJsonString(event)))
 			.andExpect(status().isOk());
 	}
-
+	
+	public static String asJsonString(final Event event) {
+	    try {
+	        return new ObjectMapper().writeValueAsString(event);
+	    } catch (Exception e) {
+	        throw new RuntimeException(e);
+	    }
+	}
 }
