@@ -13,4 +13,5 @@ import com.lucamusic.event.entity.Event;
 public interface EventRepository extends MongoRepository<Event, String>{
 	public List<Event> findAll();
 	public Event findByName(String name);
+        public List<Event> findAllByStatus(String status);
 }
