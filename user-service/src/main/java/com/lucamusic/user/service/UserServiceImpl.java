@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 		return userRepo.findById(id).orElse(null);
 	}
 
-	@Override
+	/*@Override
 	public void deleteUser(User user) {
             Optional<User> userDB = userRepo.findById(user.getId());
                 if (userDB == null){
@@ -52,9 +52,9 @@ public class UserServiceImpl implements UserService {
                 user.setStatus("DELETED");
                 userRepo.save(user);
 
-	}
+	}*/
 
-        @Override
+        /*@Override
         public User modifyUser(User user) {
             Optional<User> userDB = userRepo.findById(user.getId());
 
@@ -64,12 +64,12 @@ public class UserServiceImpl implements UserService {
             }
 
             return userRepo.save(user);
-        }
+        }*/
 
-        @Override
+        /*@Override
         public List<User> usersByStatus(String status) {
             return userRepo.findAllByStatus(status);
-        }
+        }*/
 
     
 

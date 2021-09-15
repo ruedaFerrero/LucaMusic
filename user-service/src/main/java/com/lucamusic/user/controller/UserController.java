@@ -20,8 +20,8 @@ import com.lucamusic.user.entity.User;
 import org.springframework.web.server.ResponseStatusException;
 
 /**
- * Nombre de la clase: UserControl
- * Esta clase se encarga de poner en uso los eventos de UserRepository
+ * Nombre de la clase: UserController
+ Esta clase se encarga de poner en uso los eventos de UserRepository
  * @author:Emanuel
  * @version: 14/09/2021/v1
  */
@@ -29,7 +29,7 @@ import org.springframework.web.server.ResponseStatusException;
 @Slf4j
 @RestController
 @RequestMapping("/users")
-public class UserControl {
+public class UserController {
 	@Autowired 
 	private UserService userServ;
 
