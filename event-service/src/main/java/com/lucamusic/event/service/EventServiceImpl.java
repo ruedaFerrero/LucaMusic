@@ -35,6 +35,10 @@ public class EventServiceImpl implements EventService {
 	public List<Event> getEvents(){
 		return eventRepository.findAll();
 	}
+        @Override
+	public List<Event> eventsByStatus(String status){
+		return eventRepository.findAllByStatus(status);
+	}
 	
 	@Override
 	public Event getEventById(String id) {
@@ -44,19 +48,31 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public Event deleteEvent(Event event) {
 		Optional<Event> eventDB = eventRepository.findById(event.getId());
-		return eventDB.orElseGet(() -> {
+                if (eventDB == null){
+                    log.error("Deleting event error...");
+                    return eventDB.get();
+                }
+		//return eventDB.orElseGet(() -> {
+                log.info("Deleting event...");
+                event.setStatus("DELETED");
+                return eventRepository.save(event);
+		//});
+		/*return eventDB.orElseGet(() -> {
 			log.info("Deleting event...");
 			event.setStatus("DELETED");
 			return eventRepository.save(event);
-		});
+		});*/
 	}
 
 	@Override
 	public Event modifyEvent(Event event) {
-		Optional<Event> eventDB = eventRepository.findById(event.getId());	
-		return eventDB.orElseGet(() -> {
-			log.info("Modifying event...");
-			return eventRepository.save(event);
-		});
+		Optional<Event> eventDB = eventRepository.findById(event.getId());
+                if (eventDB == null){
+                    log.error("Modifying event error...");
+                    return eventDB.get();
+                }
+                
+                log.info("Modifying event...");
+                return eventRepository.save(event);
 	}
 }

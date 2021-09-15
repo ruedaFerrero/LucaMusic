@@ -44,7 +44,9 @@ public class EventController {
 	 */
 	@GetMapping
 	public ResponseEntity<List<Event>> getEvents(){
-		List<Event> events = serv.getEvents();
+		//List<Event> events = serv.getEvents();
+                String status = "CREATED";
+                List<Event> events = serv.eventsByStatus(status);
 		if(events.isEmpty()) {
 			return ResponseEntity.noContent().build();
 		}
@@ -91,12 +93,13 @@ public class EventController {
 	@PutMapping("/{id}")
 	public ResponseEntity<Event> modifyEvent(@PathVariable("id") String id, @RequestBody Event event){
 		log.info("Updating with id {}", id);
-		event.setId(id);
-		Event eventUpdated = serv.modifyEvent(event);
+		Event eventUpdated = serv.getEventById(id);
 		if(eventUpdated == null){
 			log.error("Unable to update. No Event with id {}", id);
 			return ResponseEntity.notFound().build();
 		}
+                event.setId(id);
+                eventUpdated = serv.modifyEvent(event);
 		return ResponseEntity.ok(eventUpdated);
 	}
 
