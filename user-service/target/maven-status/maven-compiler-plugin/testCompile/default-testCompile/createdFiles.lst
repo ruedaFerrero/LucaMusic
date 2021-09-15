@@ -1,3 +1,3 @@
-com\lucamusic\user\UserTest02_createUser.class
-com\lucamusic\user\UserServiceApplicationTests.class
-com\lucamusic\user\UserTest01_Autowired.class
+com/lucamusic/user/UserTest03_getUserById.class
+com/lucamusic/user/UserTest02_createUser.class
+com/lucamusic/user/UserServiceApplicationTests.class

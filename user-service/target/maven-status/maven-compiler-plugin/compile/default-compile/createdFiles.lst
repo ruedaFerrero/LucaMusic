@@ -1,6 +1,6 @@
-com\lucamusic\user\service\UserServiceImpl.class
-com\lucamusic\user\control\UserControl.class
-com\lucamusic\user\UserServiceApplication.class
-com\lucamusic\user\service\UserService.class
-com\lucamusic\user\repository\UserRepository.class
-com\lucamusic\user\entity\User.class
+com/lucamusic/user/control/UserControl.class
+com/lucamusic/user/entity/User.class
+com/lucamusic/user/service/UserService.class
+com/lucamusic/user/repository/UserRepository.class
+com/lucamusic/user/UserServiceApplication.class
+com/lucamusic/user/service/UserServiceImpl.class
