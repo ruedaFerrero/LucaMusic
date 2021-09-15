@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.Date;
@@ -27,7 +28,7 @@ public class Event {
 	private String photoUrl;
 	@Future(message = "La fecha introducida ya ha pasado") @NotNull(message = "El campo date debe existir") @JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate date;
-	@NotNull (message = "El campo location debe existir")
+	@NotNull (message = "El campo location debe existir") @Valid
 	private Location location;
 	Map<String, Double> prices;
 	@NotNull (message = "El campo musicStyle debe existir")

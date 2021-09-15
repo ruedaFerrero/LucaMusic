@@ -90,8 +90,11 @@ public class EventController {
 	 * @return ResponseEntity 200, OK
 	 * @author Edgar*/
 	@PutMapping("/{id}")
-	public ResponseEntity<Event> modifyEvent(@PathVariable("id") String id, @RequestBody Event event){
+	public ResponseEntity<Event> modifyEvent(@PathVariable("id") String id,@Valid @RequestBody Event event, BindingResult result){
 		log.info("Updating with id {}", id);
+		if(result.hasErrors()){
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
+		}
 		event.setId(id);
 		Event eventUpdated = serv.modifyEvent(event);
 		if(eventUpdated == null){
