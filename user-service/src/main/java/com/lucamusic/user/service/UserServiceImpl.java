@@ -9,6 +9,19 @@ import org.springframework.stereotype.Service;
 import com.lucamusic.user.entity.User;
 import com.lucamusic.user.repository.UserRepository;
 
+/**
+* Nombre de la clase: UserServiceImpl
+
+ * Esta clase es la encargada de ejecutar los metodos del UserService
+
+ * @author:Emanuel
+
+ * @version: 14/09/2021/v1
+
+ 
+ */
+
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -39,12 +52,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> getAllUsers() {
 		// TODO Auto-generated method stub
-		return null;
+		return userRepo.findAll();
 	}
 
 	@Override
 	public User findByID(Long id) {
-		return null;
+		return userRepo.getById(id);
 		// TODO Auto-generated method stub
 
 	}

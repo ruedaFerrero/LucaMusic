@@ -1,16 +1,21 @@
 package com.lucamusic.user.repository;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.lucamusic.user.entity.User;
+
+/**
+* Nombre de la clase: UserRepository
+
+ * Esta Interfaz es la encargada de llamar a los metodos(save, delete, findById...)
+
+ * @author:Emanuel
+
+ * @version: 14/09/2021/v1
+
+ 
+ */
 
 
 @Repository
