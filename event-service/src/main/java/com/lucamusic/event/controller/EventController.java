@@ -44,9 +44,8 @@ public class EventController {
 	 */
 	@GetMapping
 	public ResponseEntity<List<Event>> getEvents(){
-		//List<Event> events = serv.getEvents();
-                String status = "CREATED";
-                List<Event> events = serv.eventsByStatus(status);
+		log.info("Fetching all Events");
+		List<Event> events = serv.eventsByStatus("CREATED");
 		if(events.isEmpty()) {
 			return ResponseEntity.noContent().build();
 		}
@@ -55,7 +54,7 @@ public class EventController {
 
 	/**
 	 * Metodo para recuperar un evento por id
-	 * @param ObjectId id
+	 * @param String id
 	 * @return Event
 	 * @author Jose Antonio*/
 	@GetMapping("/{id}")
@@ -93,19 +92,18 @@ public class EventController {
 	@PutMapping("/{id}")
 	public ResponseEntity<Event> modifyEvent(@PathVariable("id") String id, @RequestBody Event event){
 		log.info("Updating with id {}", id);
-		Event eventUpdated = serv.getEventById(id);
+		event.setId(id);
+		Event eventUpdated = serv.modifyEvent(event);
 		if(eventUpdated == null){
 			log.error("Unable to update. No Event with id {}", id);
 			return ResponseEntity.notFound().build();
 		}
-                event.setId(id);
-                eventUpdated = serv.modifyEvent(event);
 		return ResponseEntity.ok(eventUpdated);
 	}
 
 	/**
 	 * Metodo para eliminar un evento
-	 * @param event Event
+	 * @param String Event
 	 * @return ResponseEntity 200, OK
 	 * @author Edgar*/
 	@DeleteMapping("/{id}")
