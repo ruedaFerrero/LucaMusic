@@ -80,7 +80,6 @@ public class EventController {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
 		}
 		Event eventDB = serv.createEvent(event);
-		System.out.println("id  " + eventDB.getId());
 		return ResponseEntity.status(HttpStatus.CREATED).body(eventDB);
 	}
 
