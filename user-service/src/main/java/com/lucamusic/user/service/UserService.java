@@ -21,8 +21,12 @@ public interface UserService {
 	public void save(User user);
 	
 	public List<User> getAllUsers();
+        
+        public List<User> usersByStatus(String status);
 	
 	public User findByID(Long id);
+        
+        public User modifyUser(User user);
 	
-	public void DeleteUser(Long id);
+	public void deleteUser(User user);
 }

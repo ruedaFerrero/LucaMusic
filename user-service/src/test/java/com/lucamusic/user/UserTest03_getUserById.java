@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.lucamusic.user.control.UserControl;
 import com.lucamusic.user.entity.User;
 import com.lucamusic.user.service.UserServiceImpl;
+import java.time.LocalDate;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(UserControl.class)
@@ -36,14 +37,14 @@ public class UserTest03_getUserById {
 	void assertUserSearchById() throws Exception {
 		
 
-		User user = new User(1L, "Pepe", "pepe@", "qqq", new Date(2020));
+		User user = new User(1L, "Pepe", "pepe@", "qqq", LocalDate.now(), "CREATED");
 		
 
 		Long id = 1L;
 		when(serv.findByID(id)).thenReturn(user);
 
 		mockMvc
-		.perform(get("/user/1"))
+		.perform(get("/users/1"))
 		.andDo(print())
 		.andExpect(status().isOk());
 

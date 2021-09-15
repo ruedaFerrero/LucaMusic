@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.lucamusic.user.entity.User;
 import com.lucamusic.user.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 
 /**
 * Nombre de la clase: UserServiceImpl
@@ -21,7 +22,7 @@ import com.lucamusic.user.repository.UserRepository;
  
  */
 
-
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -63,10 +64,36 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void DeleteUser(Long id) {
-		// TODO Auto-generated method stub
+	public void deleteUser(User user) {
+            Optional<User> userDB = userRepo.findById(user.getId());
+                if (userDB == null){
+                    log.error("Deleting user error...");
+                }
+		//return eventDB.orElseGet(() -> {
+                log.info("Deleting user...");
+                user.setStatus("DELETED");
+                userRepo.save(user);
 
 	}
+
+        @Override
+        public User modifyUser(User user) {
+            Optional<User> userDB = userRepo.findById(user.getId());
+
+
+            if(userDB.isPresent()) {
+                     return userDB.get();
+            }
+
+            return userRepo.save(user);
+        }
+
+        @Override
+        public List<User> usersByStatus(String status) {
+            return userRepo.findAllByStatus(status);
+        }
+
+    
 
 
 }

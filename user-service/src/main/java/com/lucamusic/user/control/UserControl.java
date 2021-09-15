@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lucamusic.user.entity.User;
 import com.lucamusic.user.service.UserServiceImpl;
+import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 
 /**
@@ -34,13 +37,28 @@ import com.lucamusic.user.service.UserServiceImpl;
 
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserControl {
 
 	private static final Logger log = LoggerFactory.getLogger(UserControl.class);
 
 	@Autowired 
 	private UserServiceImpl userServ;
+        
+        /**
+	 * Metodo para recuperar un listado completo de los usuarios
+	 * @return List<User>
+	 * @author George
+	 */
+	@GetMapping
+	public ResponseEntity<List<User>> usersByStatus(){
+                String status = "CREATED";
+                List<User> users = userServ.usersByStatus(status);
+		if(users.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok(users);
+	}
 
 
 	@PostMapping("/add")
@@ -51,17 +69,52 @@ public class UserControl {
 
 	}
 	@GetMapping("/{id}")
-	public ResponseEntity<User> getEventById(@PathVariable("id") Long id){
+	public ResponseEntity<User> getUserById(@PathVariable("id") Long id){
 		log.info("Fetching User with id {}", id);
 		User user = userServ.findByID(id);
 		if(user == null){
-			log.error("Event with id {} not found", id);
+			log.error("#########sUser with id {} not found", id);
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(user);
-	
+        }
+                
+        /**
+	 * Metodo para modificar un usuario
+	 * @param user User
+	 * @return ResponseEntity 200, OK
+	 * @author George*/
+	@PutMapping("/{id}")
+	public ResponseEntity<User> modifyUser(@PathVariable("id") Long id, @RequestBody User user){
+		log.info("Updating User with id {}", id);
+		User userUpdated = userServ.findByID(id);
+		if(userUpdated == null){
+			log.error("Unable to update. No USer with id {}", id);
+			return ResponseEntity.notFound().build();
+		}
+                user.setId(id);
+                userUpdated = userServ.modifyUser(user);
+		return ResponseEntity.ok(userUpdated);
+	}
+        
+        /**
+	 * Metodo para eliminar un evento
+	 * @param user User
+	 * @return ResponseEntity 200, OK
+	 * @author George*/
+	@DeleteMapping("/{id}")
+	public ResponseEntity<User> deleteUser(@PathVariable("id") Long id){
+		log.info("Fetching and deleting User with id {}", id);
+		User userDeleted = userServ.findByID(id);
+		if(userDeleted == null){
+			log.error("Unable to delete. No User with id {}", id);
+			return ResponseEntity.notFound().build();
+		}
+		userServ.deleteUser(userDeleted);
+		return ResponseEntity.ok(userDeleted);
+	}
 
 
-}
+
 
 }

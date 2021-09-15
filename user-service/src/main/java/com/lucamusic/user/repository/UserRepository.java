@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.lucamusic.user.entity.User;
+import java.util.List;
 
 /**
 * Nombre de la clase: UserRepository
@@ -21,6 +22,6 @@ import com.lucamusic.user.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User,Long>{
 
-
+    public List<User> findAllByStatus(String status);
 
 }

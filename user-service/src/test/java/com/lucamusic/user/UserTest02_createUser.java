@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.lucamusic.user.control.UserControl;
 import com.lucamusic.user.entity.User;
 import com.lucamusic.user.service.UserServiceImpl;
+import java.time.LocalDate;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(UserControl.class)
@@ -37,12 +38,13 @@ public class UserTest02_createUser {
 
 	@Test
 	void assertUserIsCreated() throws Exception {
-		User user = new User(1L, "Pepe", "pepe@", "qqq", new Date(2020));
+           
+		User user = new User(1L, "Pepe", "pepe@", "qqq", LocalDate.now(), "CREATED");
 		
 		when(serv.createUser(user)).thenReturn(user);
 
 		mockMvc
-		.perform(post("/user/add"))
+		.perform(post("/users/add"))
 		.andDo(print())
 		.andExpect(status().isOk());
 		
