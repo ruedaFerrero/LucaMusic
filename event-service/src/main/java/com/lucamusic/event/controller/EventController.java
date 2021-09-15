@@ -24,29 +24,32 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 
 /**
- * EventController
- * Clase Controller del microservicio, redirecciona según las peticiones realizadas por el cliente.
+ * EventController Clase Controller del microservicio, redirecciona según las
+ * peticiones realizadas por el cliente.
+ * 
  * @version 1.0 Septiembre 2021
- * @author Jose Antonio, Edgar*/
+ * @author Jose Antonio, Edgar
+ */
 
 @Slf4j
 @RestController
 @RequestMapping("/events")
 public class EventController {
-	
+
 	@Autowired
 	private EventService serv;
 
 	/**
 	 * Metodo para recuperar un listado completo de los eventos
+	 * 
 	 * @return List<Event>
 	 * @author Jose Antonio
 	 */
 	@GetMapping
-	public ResponseEntity<List<Event>> getEvents(){
+	public ResponseEntity<List<Event>> getEvents() {
 		log.info("Fetching all Events");
 		List<Event> events = serv.eventsByStatus("CREATED");
-		if(events.isEmpty()) {
+		if (events.isEmpty()) {
 			return ResponseEntity.noContent().build();
 		}
 		return ResponseEntity.ok(events);
@@ -54,14 +57,16 @@ public class EventController {
 
 	/**
 	 * Metodo para recuperar un evento por id
+	 * 
 	 * @param String id
 	 * @return Event
-	 * @author Jose Antonio*/
+	 * @author Jose Antonio
+	 */
 	@GetMapping("/{id}")
-	public ResponseEntity<Event> getEventById(@PathVariable("id") String id){
+	public ResponseEntity<Event> getEventById(@PathVariable("id") String id) {
 		log.info("Fetching Event with id {}", id);
 		Event event = serv.getEventById(id);
-		if(event == null){
+		if (event == null) {
 			log.error("Event with id {} not found", id);
 			return ResponseEntity.notFound().build();
 		}
@@ -70,13 +75,15 @@ public class EventController {
 
 	/**
 	 * Metodo para crear un nuevo evento
+	 * 
 	 * @param event Event
 	 * @return respuesta 201, CREATED
-	 * @author Jose Antonio*/
+	 * @author Jose Antonio
+	 */
 	@PostMapping
-	public ResponseEntity<Event> createEvent(@Valid @RequestBody Event event, BindingResult result){
+	public ResponseEntity<Event> createEvent(@Valid @RequestBody Event event, BindingResult result) {
 		log.info("Creating Event: {}", event);
-		if(result.hasErrors()){
+		if (result.hasErrors()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
 		}
 		Event eventDB = serv.createEvent(event);
@@ -85,18 +92,21 @@ public class EventController {
 
 	/**
 	 * Metodo para modificar un evento
+	 * 
 	 * @param event Event
 	 * @return ResponseEntity 200, OK
-	 * @author Edgar*/
+	 * @author Edgar
+	 */
 	@PutMapping("/{id}")
-	public ResponseEntity<Event> modifyEvent(@PathVariable("id") String id,@Valid @RequestBody Event event, BindingResult result){
+	public ResponseEntity<Event> modifyEvent(@PathVariable("id") String id, @Valid @RequestBody Event event,
+			BindingResult result) {
 		log.info("Updating with id {}", id);
-		if(result.hasErrors()){
+		if (result.hasErrors()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
 		}
 		event.setId(id);
 		Event eventUpdated = serv.modifyEvent(event);
-		if(eventUpdated == null){
+		if (eventUpdated == null) {
 			log.error("Unable to update. No Event with id {}", id);
 			return ResponseEntity.notFound().build();
 		}
@@ -105,14 +115,16 @@ public class EventController {
 
 	/**
 	 * Metodo para eliminar un evento
+	 * 
 	 * @param String Event
 	 * @return ResponseEntity 200, OK
-	 * @author Edgar*/
+	 * @author Edgar
+	 */
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Event> deleteEvent(@PathVariable("id") String id){
+	public ResponseEntity<Event> deleteEvent(@PathVariable("id") String id) {
 		log.info("Fetching and deleting Event with id {}", id);
 		Event eventDeleted = serv.getEventById(id);
-		if(eventDeleted == null){
+		if (eventDeleted == null) {
 			log.error("Unable to delete. No Event with id {}", id);
 			return ResponseEntity.notFound().build();
 		}
