@@ -1,7 +1,6 @@
 package com.lucamusic.event.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +8,6 @@ import com.lucamusic.event.entity.Event;
 import com.lucamusic.event.repository.EventRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -47,32 +45,50 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public Event deleteEvent(Event event) {
-		Optional<Event> eventDB = eventRepository.findById(event.getId());
-                if (eventDB == null){
-                    log.error("Deleting event error...");
-                    return eventDB.get();
-                }
-		//return eventDB.orElseGet(() -> {
-                log.info("Deleting event...");
-                event.setStatus("DELETED");
-                return eventRepository.save(event);
-		//});
-		/*return eventDB.orElseGet(() -> {
-			log.info("Deleting event...");
-			event.setStatus("DELETED");
-			return eventRepository.save(event);
-		});*/
+		Event eventDB = getEventById(event.getId());
+		if (eventDB == null){
+            return null;
+		}
+		log.info("Deleting event...");
+		eventDB.setStatus("DELETED");
+        return eventRepository.save(eventDB);
 	}
 
 	@Override
 	public Event modifyEvent(Event event) {
-		Optional<Event> eventDB = eventRepository.findById(event.getId());
-                if (eventDB == null){
-                    log.error("Modifying event error...");
-                    return eventDB.get();
-                }
-                
-                log.info("Modifying event...");
-                return eventRepository.save(event);
+		Event eventDB = getEventById(event.getId());
+		if (eventDB == null){
+			return null;
+		}
+
+		log.info("Modifying event...");
+		if(event.getName() != null){
+			eventDB.setName(event.getName());
+		}
+		if(event.getShortDescription() != null){
+			eventDB.setShortDescription(event.getShortDescription());
+		}
+		if(event.getLongDescription() != null){
+			eventDB.setLongDescription(event.getLongDescription());
+		}
+		if(event.getPhotoUrl() != null){
+			eventDB.setPhotoUrl(event.getPhotoUrl());
+		}
+		if(event.getDate() != null){
+			eventDB.setDate(event.getDate());
+		}
+		if(event.getLocation() != null){
+			eventDB.setLocation(event.getLocation());
+		}
+		if(event.getPrices() != null){
+			eventDB.setPrices(event.getPrices());
+		}
+		if(event.getMusicStyle() != null){
+			eventDB.setMusicStyle(event.getMusicStyle());
+		}
+		if(event.getTicketsSold() != null){
+			eventDB.setTicketsSold(event.getTicketsSold());
+		}
+		return eventRepository.save(eventDB);
 	}
 }

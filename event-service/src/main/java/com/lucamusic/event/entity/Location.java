@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 @Data @Builder
 public class Location implements Serializable {
@@ -13,6 +14,6 @@ public class Location implements Serializable {
 	private String name;
 	@NotNull
 	private String address;
-	@NotNull
+	@NotNull @PositiveOrZero
 	private Integer capacity;
 }

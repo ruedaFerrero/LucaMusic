@@ -1,8 +1,9 @@
-package com.lucamusic.event.utils;
+package com.lucamusic.user.utils;
+
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lucamusic.event.controller.ErrorMessage;
+import com.lucamusic.user.controller.ErrorMessage;
 import org.springframework.validation.BindingResult;
 
 import java.util.HashMap;
@@ -30,6 +31,7 @@ public class Utils {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
         return jsonString;
     }
 

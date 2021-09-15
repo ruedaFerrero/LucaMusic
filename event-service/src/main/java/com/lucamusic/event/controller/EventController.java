@@ -44,9 +44,8 @@ public class EventController {
 	 */
 	@GetMapping
 	public ResponseEntity<List<Event>> getEvents(){
-		//List<Event> events = serv.getEvents();
-                String status = "CREATED";
-                List<Event> events = serv.eventsByStatus(status);
+		log.info("Fetching all Events");
+		List<Event> events = serv.eventsByStatus("CREATED");
 		if(events.isEmpty()) {
 			return ResponseEntity.noContent().build();
 		}
@@ -55,7 +54,7 @@ public class EventController {
 
 	/**
 	 * Metodo para recuperar un evento por id
-	 * @param ObjectId id
+	 * @param String id
 	 * @return Event
 	 * @author Jose Antonio*/
 	@GetMapping("/{id}")
@@ -81,7 +80,6 @@ public class EventController {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
 		}
 		Event eventDB = serv.createEvent(event);
-		System.out.println("id  " + eventDB.getId());
 		return ResponseEntity.status(HttpStatus.CREATED).body(eventDB);
 	}
 
@@ -91,21 +89,23 @@ public class EventController {
 	 * @return ResponseEntity 200, OK
 	 * @author Edgar*/
 	@PutMapping("/{id}")
-	public ResponseEntity<Event> modifyEvent(@PathVariable("id") String id, @RequestBody Event event){
+	public ResponseEntity<Event> modifyEvent(@PathVariable("id") String id,@Valid @RequestBody Event event, BindingResult result){
 		log.info("Updating with id {}", id);
-		Event eventUpdated = serv.getEventById(id);
+		if(result.hasErrors()){
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
+		}
+		event.setId(id);
+		Event eventUpdated = serv.modifyEvent(event);
 		if(eventUpdated == null){
 			log.error("Unable to update. No Event with id {}", id);
 			return ResponseEntity.notFound().build();
 		}
-                event.setId(id);
-                eventUpdated = serv.modifyEvent(event);
 		return ResponseEntity.ok(eventUpdated);
 	}
 
 	/**
 	 * Metodo para eliminar un evento
-	 * @param event Event
+	 * @param String Event
 	 * @return ResponseEntity 200, OK
 	 * @author Edgar*/
 	@DeleteMapping("/{id}")
