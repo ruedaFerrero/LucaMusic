@@ -1,10 +1,10 @@
-package com.lucamusic.user.control;
-
+package com.lucamusic.user.controller;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.lucamusic.user.service.UserService;
+import com.lucamusic.user.utils.Utils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,41 +17,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lucamusic.user.entity.User;
-import com.lucamusic.user.service.UserServiceImpl;
-
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * Nombre de la clase: UserControl
-
  * Esta clase se encarga de poner en uso los eventos de UserRepository
-
  * @author:Emanuel
-
  * @version: 14/09/2021/v1
-
-
  */
 
-
+@Slf4j
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserControl {
-
-	private static final Logger log = LoggerFactory.getLogger(UserControl.class);
-
 	@Autowired 
-	private UserServiceImpl userServ;
+	private UserService userServ;
 
-
-	@PostMapping("/add")
+	@PostMapping
 	public ResponseEntity<User> createUser(@Valid @RequestBody  User user, BindingResult result){
-		log.info("-------Usuario creado "+user);
-		User usuario = userServ.createUser(user);
-		return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
-
+		log.info("Creating User: {}", user);
+		if(result.hasErrors()){
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
+		}
+		User userDB = userServ.createUser(user);
+		return ResponseEntity.status(HttpStatus.CREATED).body(userDB);
 	}
+
 	@GetMapping("/{id}")
-	public ResponseEntity<User> getEventById(@PathVariable("id") Long id){
+	public ResponseEntity<User> getUserById(@PathVariable("id") Long id){
 		log.info("Fetching User with id {}", id);
 		User user = userServ.findByID(id);
 		if(user == null){
@@ -60,5 +53,4 @@ public class UserControl {
 		}
 		return ResponseEntity.ok(user);
 	}
-
 }
