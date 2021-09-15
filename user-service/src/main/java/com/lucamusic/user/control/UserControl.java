@@ -59,9 +59,6 @@ public class UserControl {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(user);
-	
-
-
-}
+	}
 
 }

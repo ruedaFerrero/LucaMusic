@@ -3,7 +3,6 @@
 //
 //import static org.mockito.Mockito.when;
 //import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-//import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 //import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 //
 //import java.util.Date;
@@ -52,13 +51,11 @@
 //
 //
 //	@Test
-//	void assertEventisCreated() throws Exception {
-//
+//	void assertEventIsCreated() throws Exception {
 //		Location location = Location.builder()
 //										.address("a")
 //										.capacity(5000)
 //										.name("b")
-//										.place("c")
 //										.build();
 //		Event event = Event.builder()
 //						.date(new Date())
@@ -93,5 +90,4 @@
 //	        throw new RuntimeException(e);
 //	    }
 //	}
-//
 //}

@@ -3,6 +3,7 @@ package com.lucamusic.user.service;
 import java.util.List;
 import java.util.Optional;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ import com.lucamusic.user.repository.UserRepository;
  
  */
 
-
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -29,15 +30,11 @@ public class UserServiceImpl implements UserService {
 	UserRepository userRepo;
 
 	public User createUser(User user) {
-		Optional<User> userDB = userRepo.findById(user.getId());
-
-
-		if(userDB.isPresent()) {
-			 return userDB.get();
+		User userDB = userRepo.findByEmail(user.getEmail());
+		if(userDB != null) {
+			 return userDB;
 		}
-
 		return userRepo.save(user);
-
 	}
 
 
@@ -57,9 +54,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findByID(Long id) {
-		return userRepo.getById(id);
-		// TODO Auto-generated method stub
-
+		return userRepo.findById(id).orElse(null);
 	}
 
 	@Override
